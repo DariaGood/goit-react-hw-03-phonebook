@@ -44,7 +44,9 @@ export class App extends Component {
   }
 
   deleteContact(id) {
-    const updatedContacts = this.state.contacts.filter(contact => contact.id !== id);
+    const updatedContacts = this.state.contacts.filter(
+      contact => contact.id !== id
+    );
     this.setState({ contacts: updatedContacts });
   }
 
@@ -59,7 +61,6 @@ export class App extends Component {
       contact.name.toLowerCase().includes(filterValue)
     );
   }
-
 
   render() {
     return (
