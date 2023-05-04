@@ -12,12 +12,12 @@ class ContactForm extends Component {
     };
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeNumber = this.handleChangeNumber.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   classNames = require('classnames');
 
-  handleSubmit(e) {
+  handleFormSubmit(e) {
     e.preventDefault();
 
     const nanoid = customAlphabet('1234567890abcdef', 10);
@@ -29,6 +29,7 @@ class ContactForm extends Component {
     };
     this.props.onAddContact(newContact);
     this.setState({ name: '', number: '' });
+
   }
 
   handleChangeName(e) {
@@ -43,7 +44,7 @@ class ContactForm extends Component {
     const { number, name } = this.state;
 
     const inputValidName = classNames(styles.inputContact, {
-      [styles.invalid]: name === '', // || name.toLowerCase().includes(newContact.name.toLowerCase()),
+      [styles.invalid]: name === '', 
       [styles.valid]: name !== '',
     });
 
@@ -54,7 +55,7 @@ class ContactForm extends Component {
 
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleFormSubmit}>
           <input
             className={inputValidName}
             placeholder="name"

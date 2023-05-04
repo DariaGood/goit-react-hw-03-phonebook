@@ -8,7 +8,7 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contacts: [
+      contacts: JSON.parse(localStorage.getItem('contacts')) || [
         { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
         { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
         { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
@@ -22,6 +22,14 @@ export class App extends Component {
     this.checkFilterListContacts = this.checkFilterListContacts.bind(this);
   }
 
+  componentDidMount() {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
+
   addContact(newContact) {
     if (
       this.state.contacts.some(contact =>
@@ -30,16 +38,14 @@ export class App extends Component {
     ) {
       return alert(`${newContact.name} is already in contacts`);
     } else {
-      this.setState(prevState => ({
-        contacts: [...prevState.contacts, newContact],
-      }));
+      const updatedContacts = [...this.state.contacts, newContact];
+      this.setState({ contacts: updatedContacts });
     }
   }
 
   deleteContact(id) {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== id),
-    }));
+    const updatedContacts = this.state.contacts.filter(contact => contact.id !== id);
+    this.setState({ contacts: updatedContacts });
   }
 
   handleChangeFilterValue(e) {
@@ -53,6 +59,7 @@ export class App extends Component {
       contact.name.toLowerCase().includes(filterValue)
     );
   }
+
 
   render() {
     return (
